@@ -1,7 +1,7 @@
 //var serial_info = {type: 'serial'};
 /*	*/
 
-var googleKey = 'pdlmjopmdbpnlnhiegmpfimpmkobiall';
+var googleKey = 'adlikbkfllaajjiiaiekohckpkgbbffp';
 var scratchData = [0, 0];
 var dataPackage = {
 	arm:0,
