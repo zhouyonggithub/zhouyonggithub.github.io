@@ -1,7 +1,7 @@
 //var serial_info = {type: 'serial'};
 /*	*/
 
-var googleKey = 'adlikbkfllaajjiiaiekohckpkgbbffp';
+var googleKey = 'pdlmjopmdbpnlnhiegmpfimpmkobiall';
 var scratchData = [0, 0];
 var dataPackage = {
 	arm:0,
@@ -23,6 +23,7 @@ var dataPackage = {
 	set_y:16,
 	set_z:17,
 	set_rotate:18,
+	dir:19,
 };
 
 (function(ext){
@@ -68,10 +69,11 @@ var dataPackage = {
             [' ', '让飞机往 %d.flightRotate 旋转 %d.speed 度','runRotate', "顺时针", '100'],
             [' ', '让飞机飞到 %d.z 厘米','runAltitude','100'],
 			['h', '当遥控按了 %d.key 按钮时', 'when_key', 'K4'],
-			['r', '油门', 'thr'],
-			['r', '俯仰', 'pitch'],
-			['r', '横滚', 'roll'],
-			['r', '航向', 'yaw'],
+			[' ', '左飞','left_dir'],
+			[' ', '右飞','right_dir'],
+			[' ', '前飞','forward_dir'],
+			[' ', '后飞','back_dir'],
+			[' ', '中间','center_dir'],
 			['r', '航向角', 'yAngle'],
 			['r', '横滚角', 'rAngle'],
 			['r', '俯仰角', 'pAngle'],
@@ -218,6 +220,22 @@ var dataPackage = {
 		chrome.runtime.sendMessage(googleKey, scratchData, processInput);
 	};
 	
+	ext.forward_dir = function(){
+		chrome.runtime.sendMessage(googleKey, [dataPackage.dir, 1], processInput);
+	};
+	ext.back_dir = function(){
+		chrome.runtime.sendMessage(googleKey, [dataPackage.dir, 2], processInput);
+	};
+	ext.left_dir = function(){
+		chrome.runtime.sendMessage(googleKey, [dataPackage.dir, 3], processInput);
+	};
+	ext.right_dir = function(){
+		chrome.runtime.sendMessage(googleKey, [dataPackage.dir, 4], processInput);
+	};
+	ext.center_dir = function(){
+		chrome.runtime.sendMessage(googleKey, [dataPackage.dir, 0], processInput);
+	};
+	
 	ext.runAltitude = function(distance) {
 		console.log("run altitude "+distance);
 		if(Number(distance) > 250)
@@ -275,19 +293,6 @@ var dataPackage = {
 		
 	});
 
-	ext.thr = function() {
-		return 0;
-	};
-	ext.yaw = function() {
-		return 0;
-	};
-	ext.roll = function() {
-		return 0;
-	};
-	ext.pitch = function() {
-		
-		return 0;
-	};
 	ext.pAngle = function() {
 		var y = flightData[8] + flightData[9]*256;
 		y = y > 32767 ? (y - 65536)/10 : y/10;
